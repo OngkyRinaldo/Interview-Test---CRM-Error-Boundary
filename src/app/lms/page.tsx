@@ -1,3 +1,9 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Lms Page',
+};
+
 const Lms = () => {
     return (
         <main className='max-w-7xl md:container mx-auto px-5'>
