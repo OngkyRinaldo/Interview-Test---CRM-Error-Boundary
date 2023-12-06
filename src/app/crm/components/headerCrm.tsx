@@ -1,3 +1,5 @@
+'use client';
+
 import SearchInput from '@/components/search/searchInput';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -5,6 +7,7 @@ import { CiCirclePlus } from 'react-icons/ci';
 import { CiSearch } from 'react-icons/ci';
 
 const HeaderCrm = () => {
+    const pathname = usePathname();
     return (
         <main className='max-w-7xl md:container mx-auto '>
             <section className='mt-24 '>
@@ -14,19 +17,34 @@ const HeaderCrm = () => {
                 <div className='mt-5 flex justify-start items-center gap-x-2 px-5'>
                     <Link
                         href='/crm'
-                        className='bg-white  text-slate-600 font-semibold py-2 px-4 md:text-sm'
+                        className={`${
+                            pathname === '/crm' ||
+                            pathname === '/crm/name' ||
+                            pathname === '/crm/username' ||
+                            pathname === '/crm/email'
+                                ? 'bg-blue-100 rounded-md  text-blue-400 '
+                                : 'bg-white  text-slate-600 font-semibold '
+                        }  py-2 px-4 md:text-sm`}
                     >
                         Clients
                     </Link>
                     <Link
                         href='/crm/policy'
-                        className='bg-white  text-slate-600 font-semibold py-2 px-4 md:text-sm'
+                        className={`${
+                            pathname === '/crm/policy'
+                                ? 'bg-blue-100 rounded-md  text-blue-400 '
+                                : 'bg-white  text-slate-600 font-semibold '
+                        }  py-2 px-4 md:text-sm`}
                     >
                         Policy
                     </Link>
                     <Link
                         href='/crm/support'
-                        className='bg-white  text-slate-600 font-semibold py-2 px-4 md:text-sm'
+                        className={`${
+                            pathname === '/crm/support'
+                                ? 'bg-blue-100 rounded-md  text-blue-400 '
+                                : 'bg-white  text-slate-600 font-semibold '
+                        }  py-2 px-4 md:text-sm`}
                     >
                         Support
                     </Link>
