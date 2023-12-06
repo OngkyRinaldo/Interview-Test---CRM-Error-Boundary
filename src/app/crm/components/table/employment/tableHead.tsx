@@ -19,7 +19,7 @@ const TableHead = ({
                     name
                 </th>
                 <th className=' p-3 text-sm font-semibold tracking-wide flex justify-start items-center gap-x-2'>
-                    <span>Marital Status</span>
+                    <span>Employment</span>
                     <button
                         className='cursor-pointer hover:text-blue-400'
                         onClick={handleSortDirectionToggle}

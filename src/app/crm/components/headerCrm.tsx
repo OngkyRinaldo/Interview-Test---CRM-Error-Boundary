@@ -71,7 +71,7 @@ const HeaderCrm = () => {
                         </div>
                         <div className='flex-shrink-0'>
                             <Link
-                                href='/crm/marital'
+                                href='/crm/employment'
                                 className='text-sm flex justify-start items-center gap-x-2 bg-slate-200 py-2 px-4 rounded-full'
                             >
                                 <CiCirclePlus /> Employment

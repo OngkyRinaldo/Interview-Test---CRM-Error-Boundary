@@ -35,8 +35,8 @@ const Table = () => {
     const handleSortDirectionToggle = () => {
         const sortedUsers = [...users].sort((a, b) =>
             sortDirection === 'ASC'
-                ? a.gender.localeCompare(b.gender)
-                : b.gender.localeCompare(a.gender)
+                ? a.employmentStatus.localeCompare(b.employmentStatus)
+                : b.employmentStatus.localeCompare(a.employmentStatus)
         );
 
         setUsers(sortedUsers);
@@ -167,8 +167,10 @@ const Table = () => {
                                         <h3 className='font-semibold'>
                                             Name:{user.name}
                                         </h3>
+
                                         <h3 className='font-semibold'>
-                                            Gender:{user.gender}
+                                            Employment Status:
+                                            {user.employmentStatus}
                                         </h3>
                                     </div>
                                 </div>

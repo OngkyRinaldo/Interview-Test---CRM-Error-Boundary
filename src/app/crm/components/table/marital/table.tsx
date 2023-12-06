@@ -35,8 +35,8 @@ const Table = () => {
     const handleSortDirectionToggle = () => {
         const sortedUsers = [...users].sort((a, b) =>
             sortDirection === 'ASC'
-                ? a.gender.localeCompare(b.gender)
-                : b.gender.localeCompare(a.gender)
+                ? a.maritalStatus.localeCompare(b.maritalStatus)
+                : b.maritalStatus.localeCompare(a.maritalStatus)
         );
 
         setUsers(sortedUsers);
@@ -167,23 +167,9 @@ const Table = () => {
                                         <h3 className='font-semibold'>
                                             Name:{user.name}
                                         </h3>
-                                        <h3 className='font-semibold'>
-                                            Gender:{user.gender}
-                                        </h3>
-                                        <h3 className='font-semibold'>
-                                            Dob:
-                                            {user.dob
-                                                ? new Date(
-                                                      user.dob
-                                                  ).toLocaleDateString()
-                                                : '-'}
-                                        </h3>
+
                                         <h3 className='font-semibold'>
                                             Marital Status :{user.maritalStatus}
-                                        </h3>
-                                        <h3 className='font-semibold'>
-                                            Employment Status:
-                                            {user.employmentStatus}
                                         </h3>
                                     </div>
                                 </div>
