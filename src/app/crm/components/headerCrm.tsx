@@ -4,7 +4,6 @@ import SearchInput from '@/components/search/searchInput';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { CiCirclePlus } from 'react-icons/ci';
-import { CiSearch } from 'react-icons/ci';
 
 const HeaderCrm = () => {
     const pathname = usePathname();
@@ -19,9 +18,9 @@ const HeaderCrm = () => {
                         href='/crm'
                         className={`${
                             pathname === '/crm' ||
-                            pathname === '/crm/name' ||
-                            pathname === '/crm/username' ||
-                            pathname === '/crm/email'
+                            pathname === '/crm/gender' ||
+                            pathname === '/crm/marital' ||
+                            pathname === '/crm/employment'
                                 ? 'bg-blue-100 rounded-md  text-blue-400 '
                                 : 'bg-white  text-slate-600 font-semibold '
                         }  py-2 px-4 md:text-sm`}
