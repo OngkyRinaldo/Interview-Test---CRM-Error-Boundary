@@ -37,7 +37,7 @@ const Navbar = () => {
                             href='/dashboard'
                             className={`${
                                 pathname === '/dashboard'
-                                    ? 'bg-blue-200 rounded-sm  '
+                                    ? 'bg-blue-100 rounded-sm  '
                                     : 'bg-white'
                             } text-slate-600 font-semibold py-2 px-4 md:text-sm`}
                         >
@@ -47,7 +47,7 @@ const Navbar = () => {
                             href='/crm'
                             className={`${
                                 pathname === '/crm'
-                                    ? 'bg-blue-200 rounded-sm  '
+                                    ? 'bg-blue-100 rounded-sm  '
                                     : 'bg-white'
                             } text-slate-600 font-semibold py-2 px-4 md:text-sm`}
                         >
@@ -57,7 +57,7 @@ const Navbar = () => {
                             href='/submission'
                             className={`${
                                 pathname === '/submission'
-                                    ? 'bg-blue-200 rounded-sm  '
+                                    ? 'bg-blue-100 rounded-sm  '
                                     : 'bg-white'
                             } text-slate-600 font-semibold py-2 px-4 md:text-sm`}
                         >
@@ -67,7 +67,7 @@ const Navbar = () => {
                             href='/commission'
                             className={`${
                                 pathname === '/commission'
-                                    ? 'bg-blue-200 rounded-sm  '
+                                    ? 'bg-blue-100 rounded-sm  '
                                     : 'bg-white'
                             } text-slate-600 font-semibold py-2 px-4 md:text-sm`}
                         >
