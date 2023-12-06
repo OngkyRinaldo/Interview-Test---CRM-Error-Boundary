@@ -48,26 +48,26 @@ const HeaderCrm = () => {
                     <div className='mt-5 md:mt-0 flex justify-center items-center gap-x-2'>
                         <div>
                             <Link
-                                href='/crm/name'
+                                href='/crm/gender'
                                 className='flex justify-start items-center gap-x-2 bg-slate-200 py-1 px-4 rounded-full'
                             >
-                                <CiCirclePlus /> name
+                                <CiCirclePlus /> Gender
                             </Link>
                         </div>
                         <div>
                             <Link
-                                href='/crm/username'
+                                href='/crm/marital'
                                 className='flex justify-start items-center gap-x-2 bg-slate-200 py-1 px-4 rounded-full'
                             >
-                                <CiCirclePlus /> username
+                                <CiCirclePlus /> Marital Status
                             </Link>
                         </div>
                         <div>
                             <Link
-                                href='/crm/email'
+                                href='/crm/marital'
                                 className='flex justify-start items-center gap-x-2 bg-slate-200 py-1 px-4 rounded-full'
                             >
-                                <CiCirclePlus /> email
+                                <CiCirclePlus /> Employment
                             </Link>
                         </div>
                     </div>
