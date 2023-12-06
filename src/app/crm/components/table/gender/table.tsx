@@ -8,6 +8,8 @@ import Image from 'next/image';
 import { RiAccountCircleLine } from 'react-icons/ri';
 import Error from '@/app/error';
 import TableBody from './tableBody';
+import Link from 'next/link';
+import { CiSearch, CiCirclePlus } from 'react-icons/ci';
 
 const Table = () => {
     const [users, setUsers] = useState<User[]>([]);
@@ -16,6 +18,7 @@ const Table = () => {
     const [sortDirection, setSortDirection] = useState<'ASC' | 'DESC'>('ASC');
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(3);
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
     const fetchUsers = async () => {
         try {
@@ -33,21 +36,27 @@ const Table = () => {
     }, []);
 
     const handleSortDirectionToggle = () => {
-        const sortedUsers = [...users].sort((a, b) =>
-            sortDirection === 'ASC'
-                ? a.gender.localeCompare(b.gender)
-                : b.gender.localeCompare(a.gender)
-        );
-
-        setUsers(sortedUsers);
         setSortDirection((prevDirection) =>
             prevDirection === 'ASC' ? 'DESC' : 'ASC'
         );
+
+        setUsers((prevUsers) =>
+            [...prevUsers].sort((a, b) => {
+                if (sortDirection === 'ASC') {
+                    return a.gender.localeCompare(b.gender);
+                } else {
+                    return b.gender.localeCompare(a.gender);
+                }
+            })
+        );
     };
+    const filteredUsers = users.filter((user) =>
+        user.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = users.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
 
     const previousPage = () => {
         setCurrentPage((prevPage) => prevPage - 1);
@@ -70,157 +79,205 @@ const Table = () => {
             ) : error ? (
                 <Error />
             ) : (
-                <section className='mt-5'>
-                    <div className='mt-5 overflow-auto border border-slate-300 shadow rounded-lg hidden md:block'>
-                        <table className='w-full  '>
-                            <TableHead
-                                handleSortDirectionToggle={
-                                    handleSortDirectionToggle
-                                }
-                                sortDirection={sortDirection}
-                            />
-                            <tbody className='h-56'>
-                                {currentItems.map((user) => (
-                                    <TableBody key={user.id} user={user} />
-                                ))}
-                            </tbody>
-                            <tfoot className='w-full'>
-                                <tr>
-                                    <td colSpan={5} className='px-6 py-4'>
-                                        <div className='flex justify-between items-center'>
-                                            <button
-                                                className='border border-slate-400 rounded-lg px-6 py-2 flex justify-center items-center gap-x-2'
-                                                onClick={() =>
-                                                    setCurrentPage(
-                                                        currentPage - 1
-                                                    )
-                                                }
-                                                disabled={currentPage === 1}
-                                            >
-                                                <FaArrowLeft /> Previous
-                                            </button>
-                                            <ul className='flex justify-center space-x-2'>
-                                                {Array.from({
-                                                    length: totalPages,
-                                                }).map((_, index) => (
-                                                    <li key={index}>
-                                                        <button
-                                                            className={`${
-                                                                currentPage ===
-                                                                index + 1
-                                                                    ? 'bg-slate-300 '
-                                                                    : 'bg-white '
-                                                            } rounded-lg px-4 py-2 text-black`}
-                                                            onClick={() =>
-                                                                paginate(
-                                                                    index + 1
-                                                                )
-                                                            }
-                                                        >
-                                                            {index + 1}
-                                                        </button>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                            <button
-                                                className='border border-slate-400 rounded-lg px-6 py-2 flex justify-center items-center gap-x-2'
-                                                onClick={() =>
-                                                    setCurrentPage(
-                                                        currentPage + 1
-                                                    )
-                                                }
-                                                disabled={
-                                                    currentPage === totalPages
-                                                }
-                                            >
-                                                <FaArrowRight /> Next
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-
-                    <div className='grid grid-cols-1 gap-2 md:hidden'>
-                        {currentItems.map((user) => (
-                            <div
-                                key={user.id}
-                                className='bg-slate-300 shadow mb-3 p-5 rounded-md'
-                            >
-                                <div className='flex justify-start items-center gap-x-2 border-b-2'>
-                                    <input type='checkbox' />
-                                    <h2 className='font-bold'>{user.name}</h2>
+                <>
+                    <section className='mt-10 px-5'>
+                        <div className='flex flex-col  md:flex-row md:justify-start md:items-center md:gap-x-2'>
+                            <div className='relative '>
+                                <CiSearch className='absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-700 text-2xl' />
+                                <input
+                                    type='search'
+                                    placeholder='Search by name'
+                                    className='py-2 pl-10 pr-8 border border-slate-500 rounded-lg'
+                                    value={searchTerm}
+                                    onChange={(e) =>
+                                        setSearchTerm(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <div className='mt-5 md:mt-0 flex flex-wrap gap-4 justify-center items-center  px-5 '>
+                                <div className='flex-shrink-0'>
+                                    <Link
+                                        href='/crm/gender'
+                                        className='text-sm flex justify-start items-center gap-x-2 bg-slate-200 py-2 px-4 rounded-full'
+                                    >
+                                        <CiCirclePlus /> Gender
+                                    </Link>
                                 </div>
-                                <div className='flex justify-start items-center gap-x-4 py-3 '>
-                                    {user.image ? (
-                                        <Image
-                                            src={user.image}
-                                            alt={user.name}
-                                            height={50}
-                                            width={50}
-                                        />
-                                    ) : (
-                                        <RiAccountCircleLine size={50} />
-                                    )}
-                                    <div className=''>
-                                        <h3 className='font-semibold'>
-                                            Name:{user.name}
-                                        </h3>
-                                        <h3 className='font-semibold'>
-                                            Gender:{user.gender}
-                                        </h3>
-                                    </div>
+                                <div className='flex-shrink-0'>
+                                    <Link
+                                        href='/crm/marital'
+                                        className='text-sm flex justify-start items-center gap-x-2 bg-slate-200 py-2 px-4 rounded-full'
+                                    >
+                                        <CiCirclePlus /> Marital Status
+                                    </Link>
                                 </div>
-                            </div>
-                        ))}
-
-                        <div className='bg-slate-300 shadow mb-3 p-5 rounded-md flex flex-col sm:flex-row justify-between items-center gap-y-3 py-5 max-w-full '>
-                            <div>
-                                <button
-                                    className='border bg-white border-slate-400 rounded-lg px-6 py-2 flex justify-center items-center gap-x-2 w-36'
-                                    onClick={previousPage}
-                                    disabled={currentPage === 1}
-                                >
-                                    <FaArrowLeft /> Previous
-                                </button>
-                            </div>
-                            <div className='flex-1 flex overflow-x-auto'>
-                                <ul className='flex justify-center space-x-2'>
-                                    {Array.from({ length: totalPages }).map(
-                                        (_, index) => (
-                                            <li key={index}>
-                                                <button
-                                                    className={`${
-                                                        currentPage ===
-                                                        index + 1
-                                                            ? 'bg-slate-200 border rounded-md'
-                                                            : 'bg-white'
-                                                    } rounded-lg px-4 py-2 text-black`}
-                                                    onClick={() =>
-                                                        paginate(index + 1)
-                                                    }
-                                                >
-                                                    {index + 1}
-                                                </button>
-                                            </li>
-                                        )
-                                    )}
-                                </ul>
-                            </div>
-                            <div>
-                                <button
-                                    className='border bg-white border-slate-400 rounded-lg px-6 py-2 flex justify-center items-center gap-x-2 w-36'
-                                    onClick={nextPage}
-                                    disabled={currentPage === totalPages}
-                                >
-                                    <FaArrowRight />
-                                    Next
-                                </button>
+                                <div className='flex-shrink-0'>
+                                    <Link
+                                        href='/crm/employment'
+                                        className='text-sm flex justify-start items-center gap-x-2 bg-slate-200 py-2 px-4 rounded-full'
+                                    >
+                                        <CiCirclePlus /> Employment
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                    <section className='mt-5'>
+                        <div className='mt-5 overflow-auto border border-slate-300 shadow rounded-lg hidden md:block'>
+                            <table className='w-full  '>
+                                <TableHead
+                                    handleSortDirectionToggle={
+                                        handleSortDirectionToggle
+                                    }
+                                    sortDirection={sortDirection}
+                                />
+                                <tbody className='h-56'>
+                                    {currentItems.map((user) => (
+                                        <TableBody key={user.id} user={user} />
+                                    ))}
+                                </tbody>
+                                <tfoot className='w-full'>
+                                    <tr>
+                                        <td colSpan={5} className='px-6 py-4'>
+                                            <div className='flex justify-between items-center'>
+                                                <button
+                                                    className='border border-slate-400 rounded-lg px-6 py-2 flex justify-center items-center gap-x-2'
+                                                    onClick={() =>
+                                                        setCurrentPage(
+                                                            currentPage - 1
+                                                        )
+                                                    }
+                                                    disabled={currentPage === 1}
+                                                >
+                                                    <FaArrowLeft /> Previous
+                                                </button>
+                                                <ul className='flex justify-center space-x-2'>
+                                                    {Array.from({
+                                                        length: totalPages,
+                                                    }).map((_, index) => (
+                                                        <li key={index}>
+                                                            <button
+                                                                className={`${
+                                                                    currentPage ===
+                                                                    index + 1
+                                                                        ? 'bg-slate-300 '
+                                                                        : 'bg-white '
+                                                                } rounded-lg px-4 py-2 text-black`}
+                                                                onClick={() =>
+                                                                    paginate(
+                                                                        index +
+                                                                            1
+                                                                    )
+                                                                }
+                                                            >
+                                                                {index + 1}
+                                                            </button>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                                <button
+                                                    className='border border-slate-400 rounded-lg px-6 py-2 flex justify-center items-center gap-x-2'
+                                                    onClick={() =>
+                                                        setCurrentPage(
+                                                            currentPage + 1
+                                                        )
+                                                    }
+                                                    disabled={
+                                                        currentPage ===
+                                                        totalPages
+                                                    }
+                                                >
+                                                    <FaArrowRight /> Next
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div className='grid grid-cols-1 gap-2 md:hidden'>
+                            {currentItems.map((user) => (
+                                <div
+                                    key={user.id}
+                                    className='bg-slate-300 shadow mb-3 p-5 rounded-md'
+                                >
+                                    <div className='flex justify-start items-center gap-x-2 border-b-2'>
+                                        <input type='checkbox' />
+                                        <h2 className='font-bold'>
+                                            {user.name}
+                                        </h2>
+                                    </div>
+                                    <div className='flex justify-start items-center gap-x-4 py-3 '>
+                                        {user.image ? (
+                                            <Image
+                                                src={user.image}
+                                                alt={user.name}
+                                                height={50}
+                                                width={50}
+                                            />
+                                        ) : (
+                                            <RiAccountCircleLine size={50} />
+                                        )}
+                                        <div className=''>
+                                            <h3 className='font-semibold'>
+                                                Name:{user.name}
+                                            </h3>
+                                            <h3 className='font-semibold'>
+                                                Gender:{user.gender}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+
+                            <div className='bg-slate-300 shadow mb-3 p-5 rounded-md flex flex-col sm:flex-row justify-between items-center gap-y-3 py-5 max-w-full '>
+                                <div>
+                                    <button
+                                        className='border bg-white border-slate-400 rounded-lg px-6 py-2 flex justify-center items-center gap-x-2 w-36'
+                                        onClick={previousPage}
+                                        disabled={currentPage === 1}
+                                    >
+                                        <FaArrowLeft /> Previous
+                                    </button>
+                                </div>
+                                <div className='flex-1 flex overflow-x-auto'>
+                                    <ul className='flex justify-center space-x-2'>
+                                        {Array.from({ length: totalPages }).map(
+                                            (_, index) => (
+                                                <li key={index}>
+                                                    <button
+                                                        className={`${
+                                                            currentPage ===
+                                                            index + 1
+                                                                ? 'bg-slate-200 border rounded-md'
+                                                                : 'bg-white'
+                                                        } rounded-lg px-4 py-2 text-black`}
+                                                        onClick={() =>
+                                                            paginate(index + 1)
+                                                        }
+                                                    >
+                                                        {index + 1}
+                                                    </button>
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <button
+                                        className='border bg-white border-slate-400 rounded-lg px-6 py-2 flex justify-center items-center gap-x-2 w-36'
+                                        onClick={nextPage}
+                                        disabled={currentPage === totalPages}
+                                    >
+                                        <FaArrowRight />
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </>
             )}
         </main>
     );
