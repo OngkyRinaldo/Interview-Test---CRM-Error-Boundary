@@ -1,3 +1,4 @@
+import SearchInput from '@/components/search/searchInput';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { CiCirclePlus } from 'react-icons/ci';
@@ -34,17 +35,7 @@ const HeaderCrm = () => {
 
             <section className='mt-10 px-5'>
                 <div className=' flex flex-col md:flex-row md:justify-start md:items-center md:gap-x-2'>
-                    <div className='relative'>
-                        <button className='cursor-pointer'>
-                            <CiSearch className='absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-700 text-2xl' />
-                        </button>
-
-                        <input
-                            type='search'
-                            placeholder='Search'
-                            className='py-2 pl-10 pr-8 border border-slate-500 rounded-lg'
-                        />
-                    </div>
+                    <SearchInput />
                     <div className='mt-5 md:mt-0 flex justify-center items-center gap-x-2'>
                         <div>
                             <Link
