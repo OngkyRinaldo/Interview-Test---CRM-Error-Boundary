@@ -10,7 +10,7 @@ const SearchInput = () => {
             <input
                 type='search'
                 placeholder='Search'
-                className='py-2 pl-10 pr-8 border border-slate-500 rounded-lg'
+                className='py-2 pl-10 pr-8 border border-slate-500 rounded-lg md:w-auto w-full'
             />
         </div>
     );

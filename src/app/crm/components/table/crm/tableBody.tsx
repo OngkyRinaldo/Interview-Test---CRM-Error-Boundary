@@ -18,11 +18,11 @@ const TableBody = ({ user }: TableBodyProps) => {
                             <Image
                                 src={user.image}
                                 alt={user.name}
-                                height={100}
-                                width={100}
+                                height={50}
+                                width={50}
                             />
                         ) : (
-                            <RiAccountCircleLine size={100} />
+                            <RiAccountCircleLine size={50} />
                         )}
                     </div>
                     <p>{user.name} </p>
@@ -32,7 +32,9 @@ const TableBody = ({ user }: TableBodyProps) => {
                 <p>{user.gender} </p>
             </td>
             <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
-                <p>{user.dob} </p>
+                <p>
+                    {user.dob ? new Date(user.dob).toLocaleDateString() : '-'}
+                </p>
             </td>
             <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                 <p>{user.maritalStatus} </p>

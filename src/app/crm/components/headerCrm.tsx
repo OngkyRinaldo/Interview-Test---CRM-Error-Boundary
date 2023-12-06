@@ -32,31 +32,30 @@ const HeaderCrm = () => {
                     </Link>
                 </div>
             </section>
-
             <section className='mt-10 px-5'>
-                <div className=' flex flex-col md:flex-row md:justify-start md:items-center md:gap-x-2'>
+                <div className='flex flex-col  md:flex-row md:justify-start md:items-center md:gap-x-2'>
                     <SearchInput />
-                    <div className='mt-5 md:mt-0 flex justify-center items-center gap-x-2'>
-                        <div>
+                    <div className='mt-5 md:mt-0 flex flex-wrap gap-4 justify-center items-center  px-5 '>
+                        <div className='flex-shrink-0'>
                             <Link
                                 href='/crm/gender'
-                                className='flex justify-start items-center gap-x-2 bg-slate-200 py-1 px-4 rounded-full'
+                                className='text-sm flex justify-start items-center gap-x-2 bg-slate-200 py-2 px-4 rounded-full'
                             >
                                 <CiCirclePlus /> Gender
                             </Link>
                         </div>
-                        <div>
+                        <div className='flex-shrink-0'>
                             <Link
                                 href='/crm/marital'
-                                className='flex justify-start items-center gap-x-2 bg-slate-200 py-1 px-4 rounded-full'
+                                className='text-sm flex justify-start items-center gap-x-2 bg-slate-200 py-2 px-4 rounded-full'
                             >
                                 <CiCirclePlus /> Marital Status
                             </Link>
                         </div>
-                        <div>
+                        <div className='flex-shrink-0'>
                             <Link
                                 href='/crm/marital'
-                                className='flex justify-start items-center gap-x-2 bg-slate-200 py-1 px-4 rounded-full'
+                                className='text-sm flex justify-start items-center gap-x-2 bg-slate-200 py-2 px-4 rounded-full'
                             >
                                 <CiCirclePlus /> Employment
                             </Link>
