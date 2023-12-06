@@ -1,26 +1,44 @@
-const TableBody = () => {
+import Image from 'next/image';
+import { RiAccountCircleLine } from 'react-icons/ri';
+
+type TableBodyProps = {
+    user: User;
+};
+
+const TableBody = ({ user }: TableBodyProps) => {
     return (
-        <tr className='bg-white border-b-2'>
+        <tr className='bg-white border-b-2' key={user.id}>
             <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                 <input type='checkbox' />
             </td>
             <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                 <div className='flex justify-start items-center gap-x-2'>
-                    <div></div>
-                    <p>name</p>
+                    <div>
+                        {user.image ? (
+                            <Image
+                                src={user.image}
+                                alt={user.name}
+                                height={100}
+                                width={100}
+                            />
+                        ) : (
+                            <RiAccountCircleLine size={100} />
+                        )}
+                    </div>
+                    <p>{user.name} </p>
                 </div>
             </td>
             <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
-                <p>Gender</p>
+                <p>{user.gender} </p>
             </td>
             <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
-                <p>DOB</p>
+                <p>{user.dob} </p>
             </td>
             <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
-                <p>Marital Status</p>
+                <p>{user.maritalStatus} </p>
             </td>
             <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
-                <p>Employment</p>
+                <p>{user.employmentStatus} </p>
             </td>
         </tr>
     );
