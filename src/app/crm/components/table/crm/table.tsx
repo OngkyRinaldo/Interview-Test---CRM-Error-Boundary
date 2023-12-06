@@ -7,6 +7,7 @@ import getAllUsers from '@/lib/getAllUsers';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import Image from 'next/image';
 import { RiAccountCircleLine } from 'react-icons/ri';
+import Error from '@/app/error';
 
 const Table = () => {
     const [users, setUsers] = useState<User[]>([]);
@@ -67,7 +68,7 @@ const Table = () => {
                     Loading...
                 </p>
             ) : error ? (
-                <p className='mt-36 text-center font-bold text-2xl'>Error...</p>
+                <Error />
             ) : (
                 <section className='mt-5'>
                     <div className='mt-5 overflow-auto border border-slate-300 shadow rounded-lg hidden md:block'>
