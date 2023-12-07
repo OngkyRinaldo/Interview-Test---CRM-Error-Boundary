@@ -1,3 +1,9 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'CRM Policy Page',
+};
+
 const Policy = () => {
     return (
         <main className='max-w-7xl md:container mx-auto px-5'>
